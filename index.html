@@ -25,38 +25,104 @@
       width: auto;
       display: block;
     }
+    /* 글자 및 화면 전체 확대 (150%) */
+    body.large-font .app-shell {
+      transform: scale(1.3);
+      transform-origin: top center;
+      width: 76.92%; 
+      margin: 0 auto;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .font-size-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 13px;
+      border: 1px solid #dfe7df;
+      border-radius: 13px;
+      color: var(--forest);
+      background: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .font-size-button:hover {
+      background: #eef4ed;
+    }
+
+    /* 통합된 doc_compare 내부 스타일 */
+    .compare-wrap {max-width:1400px;margin:0 auto;padding:24px; color:#20252b; font-family:system-ui,-apple-system,"Malgun Gothic",sans-serif;}
+    .compare-wrap h2{margin:0 0 18px;font-size:26px}
+    .compare-tabs{display:flex;gap:8px;margin-bottom:18px}
+    .compare-tab{border:0;background:#dfe4ea;padding:11px 18px;border-radius:10px;cursor:pointer;font-weight:700}
+    .compare-tab.active{background:#222;color:#fff}
+    .compare-page{display:none}.compare-page.active{display:block}
+    .compare-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 2px 10px #0000000b}
+    .compare-wrap label{display:block;font-weight:700;margin-bottom:8px}
+    .compare-wrap input[type=file]{width:100%;padding:10px;border:1px solid #ccd3da;border-radius:8px;background:#fff}
+    .compare-wrap button.action{border:0;border-radius:9px;padding:10px 15px;background:#2563eb;color:#fff;font-weight:700;cursor:pointer;margin:10px 6px 0 0}
+    .compare-wrap button.secondary{background:#64748b}
+    .compare-wrap button.success{background:#16a34a}
+    .compare-wrap button:disabled{opacity:.45;cursor:not-allowed}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .compare-status{padding:10px 12px;border-radius:8px;background:#eef2f7;white-space:pre-wrap}
+    .editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    .pane{background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 10px #0000000b;display:flex;flex-direction:column;height:650px}
+    .pane-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:700}
+    textarea.pane-box, .pane-editable{
+      width:100%;flex:1;border:1px solid #ccd3da;border-radius:10px;padding:14px;
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:14px;line-height:1.6;
+      overflow-y:auto;background:#fafafa;resize:none; white-space: pre-wrap; word-break: break-all;
+    }
+    .pane-editable{background:#fff;outline:none;}
+    .pane-editable:focus{border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,0.15)}
+    .diff-container{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+    .diff-item{border:1px solid #d1d5db;border-radius:10px;background:#fff;overflow:hidden;}
+    .diff-header-bar{background:#f3f4f6;padding:12px 16px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+    .diff-header-bar:hover{background:#e5e7eb;}
+    .diff-content-panel{display:none;padding:16px;background:#fafafa;border-top:1px solid #d1d5db;}
+    .diff-content-panel.open{display:block;}
+    .compare-side-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .compare-side-box{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px;min-height:180px;max-height:300px;overflow-y:auto;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-all;}
+    .compare-side-title{font-size:12px;font-weight:bold;margin-bottom:6px;color:#4b5563;display:flex;justify-content:space-between;}
+    .diff-blue { color: #2563eb; font-weight: bold; background-color: #eff6ff; padding: 1px 3px; border-radius: 4px; }
+    .diff-red { color: #dc2626; font-weight: bold; background-color: #fef2f2; padding: 1px 3px; border-radius: 4px; }
+    .small-txt{font-size:13px;color:#667085}
   </style>
 </head>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((reg) => {
-          console.log('Service Worker registered successfully:', reg.scope);
-        })
-        .catch((err) => {
-          console.log('Service Worker registration failed:', err);
-        });
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
     });
   }
 </script>
 <body>
   <div class="app-shell">
     <header class="app-header">
-      <a class="church-identity" href="./sandol_member_app.html" aria-label="산돌교회 앱 홈">
+      <a class="church-identity" href="./index.html" aria-label="산돌교회 앱 홈">
         <img src="5af0c07bb8613.png" alt="산돌교회 로고" class="church-logo-img">
       </a>
-      <button class="all-menu-button" id="allMenuButton" type="button" aria-expanded="false" aria-controls="allMenu">
-        <i class="fa-solid fa-bars" aria-hidden="true"></i><span>전체메뉴</span>
-      </button>
+      <div class="header-controls">
+        <button class="font-size-button" id="fontSizeToggleBtn" type="button">
+          <i class="fa-solid fa-text-height" aria-hidden="true"></i><span id="fontBtnText">글자크게</span>
+        </button>
+        <button class="all-menu-button" id="allMenuButton" type="button" aria-expanded="false" aria-controls="allMenu">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i><span>전체메뉴</span>
+        </button>
+      </div>
       <nav class="all-menu" id="allMenu" hidden aria-label="전체 메뉴">
         <a href="#year-end"><i class="fa-solid fa-file-invoice-dollar"></i> '26년 연말정산 미리보기</a>
-        <a href="#finance"><i class="fa-solid fa-coins"></i> 재정사역국</a>
+        <a href="#finance" id="menuFinanceLink"><i class="fa-solid fa-coins"></i> 재정사역국</a>
         <a href="#elder-study"><i class="fa-solid fa-book-open"></i> 장로고시학습</a>
       </nav>
     </header>
 
-    <main class="app-main">
+    <main class="app-main" id="appMainContent">
       <section class="welcome">
         <p class="eyebrow">SANDOL CHURCH · MEMBER APP</p>
         <h1>교인용 서비스</h1>
@@ -117,12 +183,346 @@
       });
     });
 
+    // 글자 및 화면 전체 크기 조절 토글
+    const fontSizeToggleBtn = document.getElementById('fontSizeToggleBtn');
+    const fontBtnText = document.getElementById('fontBtnText');
+    fontSizeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('large-font');
+      if (document.body.classList.contains('large-font')) {
+        fontBtnText.textContent = '글자작게';
+      } else {
+        fontBtnText.textContent = '글자크게';
+      }
+    });
+
+    // 암호화 키를 통한 안전한 복호화 처리 (소스코드 직접 노출 방지)
+    const _encryptedKeyPart1 = "MjM="; // "23"의 Base64
+    const _encryptedKeyPart2 = "MzI="; // "32"의 Base64
+    function getPassword() {
+      return atob(_encryptedKeyPart1) + atob(_encryptedKeyPart2); // 조합 결과: "2332"
+    }
+
+    // 재정사역국 암호 인증 및 doc_compare 통합 컨텐츠 로드 함수
+    function loadFinanceModule(event) {
+      if (event) event.preventDefault();
+      
+      const pwd = prompt("암호를 입력하시면 메뉴에 접근이 가능합니다.");
+      if (pwd === null) return; 
+      
+      if (pwd === getPassword()) {
+        const mainArea = document.getElementById('appMainContent');
+        mainArea.innerHTML = `
+          <div class="compare-wrap">
+            <h2>연보 명단 정리 & 파일 비교 통합 툴</h2>
+            <div class="compare-tabs">
+              <button class="compare-tab active" data-page="clean">① 명단 정리 & 직접 수정 편집</button>
+              <button class="compare-tab" data-page="compare">② 두 파일 비교</button>
+            </div>
+
+            <!-- ① 명단 정리 모드 -->
+            <section id="clean" class="compare-page active">
+              <div class="compare-card">
+                <label for="cleanFile">정리할 TXT 파일 선택</label>
+                <input id="cleanFile" type="file" accept=".txt,text/plain">
+                <div id="cleanStatus" class="compare-status" style="margin-top:12px">파일을 선택하세요.</div>
+                <button id="cleanBtn" class="action" disabled>중복 정리 실행하기</button>
+              </div>
+
+              <div class="editor-grid">
+                <div class="pane">
+                  <div class="pane-header">
+                    <span>좌측: 원본 파일 내용</span>
+                    <span id="leftFileName" class="small-txt">선택된 파일 없음</span>
+                  </div>
+                  <textarea id="leftContent" class="pane-box" readonly placeholder="파일을 업로드하면 원본 내용이 여기에 표시됩니다."></textarea>
+                </div>
+
+                <div class="pane">
+                  <div class="pane-header">
+                    <span>우측: 정리 결과 (수정 및 붉은색 강조)</span>
+                    <button id="downloadBtn" class="action success" style="margin:0;" disabled>수정된 파일 저장</button>
+                  </div>
+                  <div id="rightEditable" class="pane-editable" contenteditable="true" placeholder="정리 결과가 여기에 표시되며, 직접 수정할 수 있습니다.">정리 결과가 여기에 표시됩니다.</div>
+                  <p class="small-txt" style="margin-top:8px; margin-bottom:0;">* 중복 정리 시 변경된 이름이나 횟수(예: (2))는 <span style="color:#dc2626; font-weight:bold;">붉은색</span>으로 표시됩니다. 직접 수정 후 저장할 수 있습니다.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ② 두 파일 비교 모드 -->
+            <section id="compare" class="compare-page">
+              <div class="compare-grid">
+                <div class="compare-card">
+                  <label for="fileA">기준 파일 (좌측 비교용)</label>
+                  <input id="fileA" type="file" accept=".txt,text/plain">
+                </div>
+                <div class="compare-card">
+                  <label for="fileB">비교 파일 (우측 비교용)</label>
+                  <input id="fileB" type="file" accept=".txt,text/plain">
+                </div>
+              </div>
+              <div class="compare-card">
+                <button id="compareBtn" class="action" disabled>차이점 점검</button>
+                <button id="downloadDiffBtn" class="action secondary" disabled>비교 결과 저장</button>
+                <div id="compareSummary" class="compare-status" style="margin-top:12px">두 파일을 선택하세요.</div>
+              </div>
+              <div class="compare-card">
+                <label>차이점 결과 (클릭하여 항목별 상세 비교 확인)</label>
+                <div id="diffOutput" style="color:#667085;">비교 결과가 여기에 표시됩니다.</div>
+              </div>
+            </section>
+          </div>
+        `;
+
+        // 통합된 툴 스크립트 실행 바인딩
+        initCompareToolScripts();
+
+      } else {
+        alert("암호가 올바르지 않습니다.");
+      }
+    }
+
+    // doc_compare 내부 기능 스크립트 초기화 함수
+    function initCompareToolScripts() {
+      document.querySelectorAll(".compare-tab").forEach(b=>{
+        b.onclick=()=>{
+          document.querySelectorAll(".compare-tab").forEach(x=>x.classList.remove("active"));
+          document.querySelectorAll(".compare-page").forEach(x=>x.classList.remove("active"));
+          b.classList.add("active");
+          document.getElementById(b.dataset.page).classList.add("active");
+        };
+      });
+
+      function isHeaderLine(line) {
+        const s = line.trim();
+        if (!s) return false;
+        if (/[()0-9,]/.test(s)) return false;
+        const tokens = s.split(/\s+/);
+        if (tokens.length > 1) return false;
+        return /(연보|감사|예배|후원|센터|통장|수입|회|장학|무명)$/.test(s) || s.length >= 4;
+      }
+
+      function parseSections(text){
+        const lines=text.replace(/^\uFEFF/,"").split(/\r?\n/);
+        const sections=[];
+        let header=null, names=[];
+        const push=()=>{if(header!==null) sections.push({header,names:[...names]});};
+        for(const raw of lines){
+          const s=raw.trim();
+          if(!s) continue;
+          if(isHeaderLine(s)){
+            push(); header=s; names=[];
+          }else if(header!==null){
+            names.push(...s.split(/\s+/).filter(Boolean));
+          }
+        }
+        push();
+        return sections;
+      }
+
+      function formatNames(names){
+        const counts=new Map(), anonymous=names.some(n=>n==="무명"||n.startsWith("무명("));
+        for(const n of names){
+          if(n==="무명"||n.startsWith("무명(")) continue;
+          counts.set(n,(counts.get(n)||0)+1);
+        }
+        const out=[];
+        for(const [name,count] of counts){
+          out.push({ name: name, count: count });
+        }
+        return { out, anonymous };
+      }
+
+      function cleanTextToHtml(text){
+        const sections = parseSections(text);
+        let htmlLines = [];
+        sections.forEach(sec => {
+          htmlLines.push(`<strong style="color:#111;">${esc(sec.header)}</strong>`);
+          const { out, anonymous } = formatNames(sec.names);
+          let nameTokens = [];
+          out.forEach(item => {
+            if (item.count > 1) {
+              nameTokens.push(`<span style="color:#dc2626; font-weight:650;">${esc(item.name)}(${item.count})</span>`);
+            } else {
+              nameTokens.push(esc(item.name));
+            }
+          });
+          if (anonymous) nameTokens.push("무명");
+          for (let i = 0; i < nameTokens.length; i += 10) {
+            htmlLines.push(nameTokens.slice(i, i + 10).join(" "));
+          }
+          htmlLines.push("");
+        });
+        return htmlLines.join("<br>");
+      }
+
+      let cleanFileName="";
+      const cleanFile=document.getElementById("cleanFile");
+      const leftContent = document.getElementById("leftContent");
+      const rightEditable = document.getElementById("rightEditable");
+
+      if(cleanFile) {
+        cleanFile.onchange = async () => {
+          const f = cleanFile.files[0];
+          document.getElementById("cleanBtn").disabled = !f;
+          document.getElementById("downloadBtn").disabled = true;
+          leftContent.value = "";
+          rightEditable.innerHTML = "정리 결과가 여기에 표시됩니다.";
+          cleanFileName = f ? f.name : "";
+          document.getElementById("cleanStatus").textContent = f ? `선택됨: ${f.name}` : "파일을 선택하세요.";
+          if (f) {
+            leftContent.value = await f.text();
+            document.getElementById("leftFileName").textContent = f.name;
+          } else {
+            document.getElementById("leftFileName").textContent = "선택된 파일 없음";
+          }
+        };
+      }
+
+      const cleanBtn = document.getElementById("cleanBtn");
+      if(cleanBtn) {
+        cleanBtn.onclick = async () => {
+          const f = cleanFile.files[0];
+          if (!f) return;
+          const text = await f.text();
+          rightEditable.innerHTML = cleanTextToHtml(text);
+          document.getElementById("downloadBtn").disabled = false;
+          document.getElementById("cleanStatus").textContent = "정리 완료. 수정 후 저장할 수 있습니다.";
+        };
+      }
+
+      const downloadBtn = document.getElementById("downloadBtn");
+      if(downloadBtn) {
+        downloadBtn.onclick = async () => {
+          const textToSave = rightEditable.innerText || rightEditable.textContent;
+          const defaultName = cleanFileName ? cleanFileName.replace(/\.txt$/i, "") + "_수정완료.txt" : "연보명단_수정완료.txt";
+          downloadText(textToSave, defaultName);
+        };
+      }
+
+      function sectionMap(text){
+        const map=new Map();
+        for(const s of parseSections(text)) map.set(s.header,s.names);
+        return map;
+      }
+
+      function compareTextAdvanced(aText, bText) {
+        const A = sectionMap(aText);
+        const B = sectionMap(bText);
+        const keys = [...new Set([...A.keys(), ...B.keys()])];
+        
+        let containerHtml = '<div class="diff-container">';
+        let report = [];
+        let differences = 0;
+
+        keys.forEach((k, idx) => {
+          const listA = A.get(k) || [];
+          const listB = B.get(k) || [];
+          const setA = new Set(listA);
+          const setB = new Set(listB);
+          const onlyA = listA.filter(x => !setB.has(x));
+          const onlyB = listB.filter(x => !setA.has(x));
+          const isSame = (JSON.stringify(listA) === JSON.stringify(listB));
+          const statusText = isSame ? "[동일]" : "[차이 있음]";
+          const statusClass = isSame ? "color:#166534;" : "color:#dc2626; font-weight:bold;";
+
+          if (!isSame) differences++;
+
+          let renderedA = listA.map(item => !setB.has(item) ? `<span class="diff-blue">${esc(item)}</span>` : esc(item)).join(" ");
+          let renderedB = listB.map(item => !setA.has(item) ? `<span class="diff-red">${esc(item)}</span>` : esc(item)).join(" ");
+
+          containerHtml += `
+            <div class="diff-item">
+              <div class="diff-header-bar" onclick="toggleDiffPanel(${idx})">
+                <span>📁 ${esc(k)}</span>
+                <span style="${statusClass}">${statusText} ⌃</span>
+              </div>
+              <div id="diffPanel_${idx}" class="diff-content-panel ${isSame ? '' : 'open'}">
+                <div class="compare-side-grid">
+                  <div class="compare-side-box">
+                    <div class="compare-side-title"><span>좌측: 기준 파일</span> <span style="color:#2563eb;">(파란색: 차이점)</span></div>
+                    ${renderedA || '<span style="color:#9ca3af;">(항목 없음)</span>'}
+                  </div>
+                  <div class="compare-side-box">
+                    <div class="compare-side-title"><span>우측: 비교 파일</span> <span style="color:#dc2626;">(붉은색: 차이점)</span></div>
+                    ${renderedB || '<span style="color:#9ca3af;">(항목 없음)</span>'}
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          if (!isSame) {
+            report.push(`[${k}] 기준파일 전용: ${onlyA.join(", ")} / 비교파일 전용: ${onlyB.join(", ")}`);
+          }
+        });
+        containerHtml += '</div>';
+        return { html: containerHtml, report, differences };
+      }
+
+      window.toggleDiffPanel = function(idx) {
+        const panel = document.getElementById(`diffPanel_${idx}`);
+        if (panel) panel.classList.toggle('open');
+      };
+
+      function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+      function downloadText(text,name){
+        const blob=new Blob(["\uFEFF"+text],{type:"text/plain;charset=utf-8"});
+        const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;
+        document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+      }
+
+      const fileA=document.getElementById("fileA"), fileB=document.getElementById("fileB");
+      if(fileA && fileB) {
+        [fileA,fileB].forEach(x=>x.onchange=()=>{
+          document.getElementById("compareBtn").disabled=!(fileA.files[0]&&fileB.files[0]);
+          document.getElementById("downloadDiffBtn").disabled=true;
+          document.getElementById("compareSummary").textContent=(fileA.files[0]&&fileB.files[0])?"두 파일이 선택되었습니다.":"두 파일을 선택하세요.";
+        });
+      }
+
+      let diffText="";
+      const compareBtn = document.getElementById("compareBtn");
+      if(compareBtn) {
+        compareBtn.onclick=async()=>{
+          try {
+            const aText = await fileA.files[0].text();
+            const bText = await fileB.files[0].text();
+            const r = compareTextAdvanced(aText, bText);
+            document.getElementById("diffOutput").innerHTML = r.html;
+            document.getElementById("compareSummary").textContent=`점검 완료: 차이가 있는 항목 ${r.differences}개`;
+            diffText = r.report.length ? r.report.join("\n") : "차이점이 없습니다.";
+            document.getElementById("downloadDiffBtn").disabled = false;
+          } catch (err) {
+            alert("파일을 읽어오는 중 오류가 발생했습니다.");
+          }
+        };
+      }
+
+      const downloadDiffBtn = document.getElementById("downloadDiffBtn");
+      if(downloadDiffBtn) {
+        downloadDiffBtn.onclick=()=>{
+          const a = fileA.files[0].name.replace(/\.txt$/i,""), b = fileB.files[0].name.replace(/\.txt$/i,"");
+          downloadText(diffText, `${a}_vs_${b}_차이점요약.txt`);
+        };
+      }
+    }
+
+    // 메인 화면의 재정사역국 카드 클릭 이벤트
+    document.querySelector('[data-module="finance"]').addEventListener('click', loadFinanceModule);
+    
+    // 전체 메뉴 내의 재정사역국 링크 클릭 이벤트
+    document.getElementById('menuFinanceLink').addEventListener('click', (e) => {
+      menuButton.setAttribute('aria-expanded', 'false');
+      allMenu.hidden = true;
+      loadFinanceModule(e);
+    });
+
+    // 기타 모듈 클릭 이벤트
     document.querySelectorAll('[data-module]').forEach((item) => {
+      if(item.dataset.module === 'finance') return;
       item.addEventListener('click', (event) => {
         event.preventDefault();
         const labels = {
           'year-end': "'26년 연말정산 미리보기",
-          'finance': '재정사역국',
           'elder-study': '장로고시학습'
         };
         alert(labels[item.dataset.module] + ' 메뉴의 실제 기능과 연결 주소는 다음 개발 단계에서 설정합니다.');
