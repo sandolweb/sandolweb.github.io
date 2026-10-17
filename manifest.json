@@ -1,0 +1,16 @@
+{
+  "name": "산돌교회 교인용 앱",
+  "short_name": "산돌교회",
+  "start_url": "./sandol_member_app.html",
+  "display": "standalone",
+  "background_color": "#f5f7f3",
+  "theme_color": "#173f35",
+  "icons": [
+    {
+      "src": "5af0c07bb8613.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
